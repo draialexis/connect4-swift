@@ -1,0 +1,110 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXContainerItemProxy section */
+		EC7D1657297F0ECA001832F1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EC7D1653297F0ECA001832F1 /* connect4_cli.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = EC7D1649297F0ECA001832F1;
+			remoteInfo = connect4_cli;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		EC7D163F297F0EAF001832F1 /* connect4_lib */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = connect4_lib; sourceTree = "<group>"; };
+		EC7D1653297F0ECA001832F1 /* connect4_cli.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = connect4_cli.xcodeproj; path = connect4_cli/connect4_cli.xcodeproj; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		EC7D1638297F0E94001832F1 = {
+			isa = PBXGroup;
+			children = (
+				EC7D1653297F0ECA001832F1 /* connect4_cli.xcodeproj */,
+				EC7D163F297F0EAF001832F1 /* connect4_lib */,
+			);
+			sourceTree = "<group>";
+		};
+		EC7D1654297F0ECA001832F1 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				EC7D1658297F0ECA001832F1 /* connect4_cli */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXProject section */
+		EC7D1639297F0E94001832F1 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastUpgradeCheck = 1420;
+			};
+			buildConfigurationList = EC7D163C297F0E94001832F1 /* Build configuration list for PBXProject "Connect4" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = EC7D1638297F0E94001832F1;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = EC7D1654297F0ECA001832F1 /* Products */;
+					ProjectRef = EC7D1653297F0ECA001832F1 /* connect4_cli.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		EC7D1658297F0ECA001832F1 /* connect4_cli */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = connect4_cli;
+			remoteRef = EC7D1657297F0ECA001832F1 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin XCBuildConfiguration section */
+		EC7D163D297F0E94001832F1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Debug;
+		};
+		EC7D163E297F0E94001832F1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		EC7D163C297F0E94001832F1 /* Build configuration list for PBXProject "Connect4" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EC7D163D297F0E94001832F1 /* Debug */,
+				EC7D163E297F0E94001832F1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = EC7D1639297F0E94001832F1 /* Project object */;
+}
