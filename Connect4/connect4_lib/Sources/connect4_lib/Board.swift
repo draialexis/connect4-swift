@@ -9,7 +9,7 @@ public struct Board : CustomStringConvertible {
     var _grid: [[Int?]]
     
     public init?(withRows nbRows: Int = 6, andWithCols nbCols: Int = 7) {
-        guard(nbRows > 0 && nbCols > 0) else { return nil }
+        guard(nbRows >= 3 && nbCols >= 3) else { return nil }
         self.nbRows = nbRows
         self.nbCols = nbCols
         self._nbFree = nbRows * nbCols
@@ -22,10 +22,18 @@ public struct Board : CustomStringConvertible {
               && grid.allSatisfy{ $0.count == grid[0].count }) else { return nil }
         self.nbRows = grid.count
         self.nbCols = grid[0].count
-        self._nbFree = nbRows * nbCols
         self._grid = grid
+        var nbFree = self.nbRows * self.nbCols
+        for row in grid {
+            for tile in row {
+                if tile != nil {
+                    nbFree -= 1
+                }
+            }
+        }
+        self._nbFree = nbFree
     }
-
+    
     func isWithinBounds(_ row: Int, and col: Int) -> Bool {
         return 0 <= row && row < nbRows
             && 0 <= col && col < nbCols

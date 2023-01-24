@@ -23,10 +23,12 @@ final class BoardTest: XCTestCase {
         expect(initBoardWithNbRows: 6, andNbCols: -9, shouldNotBeNil: false)
         expect(initBoardWithNbRows: 0, andNbCols: 7, shouldNotBeNil: false)
         expect(initBoardWithNbRows: 6, andNbCols: 0, shouldNotBeNil: false)
+        expect(initBoardWithNbRows: 6, andNbCols: 2, shouldNotBeNil: false)
+        expect(initBoardWithNbRows: 2, andNbCols: 4, shouldNotBeNil: false)
     }
     
     func testInitLoad() throws {
-        func expect(withBoard orig: [[Int?]], shouldNotBeNil: Bool) {
+        func expect(withGrid orig: [[Int?]], shouldNotBeNil: Bool) {
             let board = Board(withGrid: orig)
             if !shouldNotBeNil {
                 XCTAssertNil(board)
@@ -37,11 +39,29 @@ final class BoardTest: XCTestCase {
             XCTAssertEqual(orig.count, board?.nbRows)
         }
         
-        expect(withBoard: [[0, 1, 2], [0, 0, 0], [0, 0, 0]], shouldNotBeNil: true)
-        expect(withBoard: [], shouldNotBeNil: false)
-        expect(withBoard: [[], []], shouldNotBeNil: false)
-        expect(withBoard: [[0, 1], [0, 0]], shouldNotBeNil: false)
-        expect(withBoard: [[0, 1, 2], [0, 0, 0, 0]], shouldNotBeNil: false)
+        expect(withGrid: [[0, 1, 2], [0, 0, 0], [0, 0, 0]], shouldNotBeNil: true)
+        expect(withGrid: [], shouldNotBeNil: false)
+        expect(withGrid: [[], []], shouldNotBeNil: false)
+        expect(withGrid: [[0, 1], [0, 0]], shouldNotBeNil: false)
+        expect(withGrid: [[0, 1, 2], [0, 0, 0, 0]], shouldNotBeNil: false)
     }
     
+    func testIsFull() throws {
+        func expect(withGrid orig: [[Int?]], shouldNotBeFull: Bool) {
+            let board = Board(withGrid: orig)
+            if shouldNotBeFull {
+                XCTAssertFalse(board!.isFull())
+            } else {
+                XCTAssertTrue(board!.isFull())
+            }
+        }
+        
+        expect(withGrid: [[nil, 1, 2], [nil, nil, nil], [nil, nil, nil]], shouldNotBeFull: true)
+        expect(withGrid: [[1, 1, 2], [2, 2, 1], [2, 1, 2]], shouldNotBeFull: false)
+        var board = Board(withGrid: [[1, nil, 2], [2, 2, 1], [2, 1, 2]])
+        expect(withGrid: board!.grid, shouldNotBeFull: true)
+        if(board!.insertChip(from: 1, atCol: 1)) {
+            expect(withGrid: board!.grid, shouldNotBeFull: false)
+        }
+    }
 }
