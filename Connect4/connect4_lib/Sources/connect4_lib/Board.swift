@@ -17,7 +17,9 @@ public struct Board : CustomStringConvertible {
     }
     
     public init?(withGrid grid: [[Int?]]) {
-        guard(grid.allSatisfy{ $0.count == grid[0].count }) else { return nil }
+        guard(grid.count >= 3
+              && grid[0].count >= 3
+              && grid.allSatisfy{ $0.count == grid[0].count }) else { return nil }
         self.nbRows = grid.count
         self.nbCols = grid[0].count
         self._nbFree = nbRows * nbCols
