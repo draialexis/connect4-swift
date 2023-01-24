@@ -39,11 +39,12 @@ final class BoardTest: XCTestCase {
             XCTAssertEqual(orig.count, board?.nbRows)
         }
         
-        expect(withGrid: [[0, 1, 2], [0, 0, 0], [0, 0, 0]], shouldNotBeNil: true)
+        expect(withGrid: [[nil, nil, nil], [nil, nil, nil], [nil, 1, 2]], shouldNotBeNil: true)
         expect(withGrid: [], shouldNotBeNil: false)
         expect(withGrid: [[], []], shouldNotBeNil: false)
-        expect(withGrid: [[0, 1], [0, 0]], shouldNotBeNil: false)
-        expect(withGrid: [[0, 1, 2], [0, 0, 0, 0]], shouldNotBeNil: false)
+        expect(withGrid: [[nil, nil], [nil, 1]], shouldNotBeNil: false)
+        expect(withGrid: [[nil, nil, nil], [nil, nil, 1, 2]], shouldNotBeNil: false)
+        expect(withGrid: [[nil, nil, nil], [nil, nil, nil], [nil, 1, 3]], shouldNotBeNil: false)
     }
     
     func testIsFull() throws {

@@ -28,6 +28,9 @@ public struct Board : CustomStringConvertible {
             for tile in row {
                 if tile != nil {
                     nbFree -= 1
+                    if (tile != 1 && tile != 2) {
+                        return nil
+                    }
                 }
             }
         }
