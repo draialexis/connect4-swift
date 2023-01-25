@@ -57,12 +57,47 @@ final class BoardTest: XCTestCase {
             }
         }
         
-        expect(withGrid: [[nil, 1, 2], [nil, nil, nil], [nil, nil, nil]], shouldNotBeFull: true)
+        expect(withGrid: [[nil, nil, nil], [nil, nil, nil], [nil, 1, 2]], shouldNotBeFull: true)
         expect(withGrid: [[1, 1, 2], [2, 2, 1], [2, 1, 2]], shouldNotBeFull: false)
         var board = Board(withGrid: [[1, nil, 2], [2, 2, 1], [2, 1, 2]])
         expect(withGrid: board!.grid, shouldNotBeFull: true)
         if(board!.insertChip(from: 1, atCol: 1)) {
             expect(withGrid: board!.grid, shouldNotBeFull: false)
         }
+    }
+    
+    func testInsertChip() throws {
+        func expect(withGrid orig: [[Int?]], playerId: Int, secretTargetRow: Int, targetCol: Int, shouldWork: Bool) {
+            if shouldWork {
+                XCTAssertNil(orig[secretTargetRow][targetCol])
+                if var board = Board(withGrid: orig) {
+                    XCTAssertTrue(board.insertChip(from: playerId, atCol: targetCol))
+                    XCTAssertEqual(playerId, board.grid[secretTargetRow][targetCol])
+                }
+            } else {
+                if var board = Board(withGrid: orig) {
+                    XCTAssertFalse(board.insertChip(from: playerId, atCol: targetCol))
+                    if  0 <= targetCol && targetCol < orig[0].count {
+                        XCTAssertEqual(orig[secretTargetRow][targetCol], board.grid[secretTargetRow][targetCol])
+                    }
+                }
+            }
+        }
+        
+        // p1, ok
+        expect(withGrid: [[nil, nil, nil], [nil, nil, nil], [nil, nil, nil]], playerId: 1, secretTargetRow: 2, targetCol: 0, shouldWork: true)
+        // p2, ok
+        expect(withGrid: [[nil, nil, nil], [nil, nil, nil], [nil, nil, nil]], playerId: 2, secretTargetRow: 2, targetCol: 0, shouldWork: true)
+        // p3, nok
+        expect(withGrid: [[nil, nil, nil], [nil, nil, nil], [nil, nil, nil]], playerId: 3, secretTargetRow: 2, targetCol: 0, shouldWork: false)
+        // out of bounds left, nok
+        expect(withGrid: [[nil, nil, nil], [nil, nil, nil], [nil, nil, nil]], playerId: 1, secretTargetRow: 2, targetCol: -1, shouldWork: false)
+        // out of bounds right, nok
+        expect(withGrid: [[nil, nil, nil], [nil, nil, nil], [nil, nil, nil]], playerId: 1, secretTargetRow: 2, targetCol: 3, shouldWork: false)
+        // grid full, nok
+        expect(withGrid: [[1, 2, 1], [1, 2, 1], [2, 1, 2]], playerId: 1, secretTargetRow: 0, targetCol: 1, shouldWork: false)
+        // column full, nok
+        expect(withGrid: [[nil, nil, 2], [nil, nil, 1], [nil, nil, 2]], playerId: 1, secretTargetRow: 0, targetCol: 2, shouldWork: false)
+
     }
 }
