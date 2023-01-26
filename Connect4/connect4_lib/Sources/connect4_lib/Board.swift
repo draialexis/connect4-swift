@@ -1,5 +1,6 @@
 import Foundation
 
+//TODO implement Equatable?
 public struct Board : CustomStringConvertible {
     
     public let nbRows: Int
