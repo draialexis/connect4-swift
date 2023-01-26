@@ -44,28 +44,32 @@ final class BasicDefaultNoDiagTest: XCTestCase {
                     shouldBeOver: Bool,
                     shouldHaveWinner: Bool,
                     victoryTilesShouldBe: [(Int, Int)]?) {
-            
+             
             if let rules = BasicDefaultsNoDiag(withMinNbRows: 3, withMaxNbRows: 5, withMinNbCols: 3, withMaxNbCols: 5, withNbChipsToAlign: 3) {
-                                
-                XCTAssertEqual(shouldBeOver, rules.isGameOver(byPlayer: playerId, onGrid: grid).isOver)
-                XCTAssertEqual(shouldHaveWinner, rules.isGameOver(byPlayer: playerId, onGrid: grid).hasWinner)
-                XCTAssertFalse(rules.isGameOver(byPlayer: playerId, onGrid: grid).hasWinner && !(rules.isGameOver(byPlayer: playerId, onGrid: grid).isOver))
+                
+                let result = rules.isGameOver(byPlayer: playerId, onGrid: grid)
+                
+                XCTAssertEqual(shouldBeOver, result.isOver)
+                XCTAssertEqual(shouldHaveWinner, result.hasWinner)
+                XCTAssertFalse(result.hasWinner && !(result.isOver))
                 
                 if shouldHaveWinner {
-                    XCTAssertTrue(rules.isGameOver(byPlayer: playerId, onGrid: grid).isOver)
+                    XCTAssertTrue(result.isOver)
 
-                    let actualVictoryTiles = rules.isGameOver(byPlayer: playerId, onGrid: grid).victoryTiles
+                    let actualVictoryTiles = result.victoryTiles
                     
                     XCTAssertNotNil(actualVictoryTiles)
     
-                    for n in 0..<victoryTilesShouldBe!.count {
-                        XCTAssertEqual(victoryTilesShouldBe![n].0, actualVictoryTiles![n].0)
-                        XCTAssertEqual(victoryTilesShouldBe![n].1, actualVictoryTiles![n].1)
+                    if let actualVictoryTiles {
+                        for n in 0..<victoryTilesShouldBe!.count {
+                            XCTAssertEqual(victoryTilesShouldBe![n].0, actualVictoryTiles[n].0)
+                            XCTAssertEqual(victoryTilesShouldBe![n].1, actualVictoryTiles[n].1)
+                        }
                     }
                 }
             }
         }
-
+        
         expect(byPlayer: 1,
                withGrid: [[nil, nil, nil],
                           [nil, nil, nil],
