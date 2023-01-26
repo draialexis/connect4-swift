@@ -87,8 +87,6 @@ final class BoardTest: XCTestCase {
         expect(withGrid: [[nil, nil, nil], [nil, nil, nil], [nil, nil, nil]], playerId: 1, secretTargetRow: 2, targetCol: 0, shouldWork: true)
         // p2, ok
         expect(withGrid: [[nil, nil, nil], [nil, nil, nil], [nil, nil, nil]], playerId: 2, secretTargetRow: 2, targetCol: 0, shouldWork: true)
-        // p3, nok
-        expect(withGrid: [[nil, nil, nil], [nil, nil, nil], [nil, nil, nil]], playerId: 3, secretTargetRow: 2, targetCol: 0, shouldWork: false)
         // out of bounds left, nok
         expect(withGrid: [[nil, nil, nil], [nil, nil, nil], [nil, nil, nil]], playerId: 1, secretTargetRow: 2, targetCol: -1, shouldWork: false)
         // out of bounds right, nok
