@@ -57,7 +57,7 @@ public struct Board : CustomStringConvertible {
         var string = String()
         for row in _grid {
             for tile in row {
-                string.append("\(String(describing: Board.descriptionMapper[tile] ?? "-"))")
+                string.append("\(String(describing: Board.descriptionMapper[tile] ?? "@"))")
             }
             string.append("\n")
         }
