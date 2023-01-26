@@ -30,7 +30,8 @@ public struct BasicDefaultsNoDiag : IRules {
         self.nbChipsToAlign = nbChipsToAlign
     }
     
-    func isGameOver(byPlayer playerId: Int, onGrid grid: [[Int?]]) -> (isOver: Bool, hasWinner: Bool, victoryTiles: [(Int, Int)]?) {
+    public func isGameOver(byPlayer playerId: Int, onGrid grid: [[Int?]])
+    -> (isOver: Bool, hasWinner: Bool, victoryTiles: [(Int, Int)]?) {
         
         // first check if board is full
         var isFull = true
