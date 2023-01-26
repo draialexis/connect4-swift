@@ -4,6 +4,14 @@ public struct Board : CustomStringConvertible {
     
     public let nbRows: Int
     public let nbCols: Int
+    
+    
+    /// Watch your indices --  in a empty 3x3 grid, if you insert a chip at column 0, it will fall down to grid[2][0]
+    ///    0 1 2
+    /// 0     -  -  -
+    /// 1     -  -  -
+    /// 2     x  -  -
+    ///
     public var grid : [[Int?]] { _grid }
     var _nbFree: Int
     var _grid: [[Int?]]
