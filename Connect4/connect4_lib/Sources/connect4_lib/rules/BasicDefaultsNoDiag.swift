@@ -1,11 +1,34 @@
 import Foundation
 
 public struct BasicDefaultsNoDiag : IRules {
-    var minNbRows: Int
-    var maxNbRows: Int
-    var minNbCols: Int
-    var maxNbCols: Int
-    var nbChipsToAlign: Int
+    public let minNbRows: Int
+    public let maxNbRows: Int
+    public let minNbCols: Int
+    public let maxNbCols: Int
+    public let nbChipsToAlign: Int
+    
+    public init?(withMinNbRows minNbRows: Int = 5,
+          withMaxNbRows maxNbRows: Int = 15,
+          withMinNbCols minNbCols: Int = 5,
+          withMaxNbCols maxNbCols: Int = 15,
+          withNbChipsToAlign nbChipsToAlign: Int = 4) {
+        
+        guard (
+            minNbRows >= 3
+            && minNbCols >= 3
+            && maxNbRows >= minNbRows
+            && maxNbCols >= minNbCols
+            && nbChipsToAlign >= 2
+            && nbChipsToAlign < minNbCols
+            && nbChipsToAlign < minNbRows
+        ) else { return nil }
+        
+        self.minNbRows = minNbRows
+        self.maxNbRows = maxNbRows
+        self.minNbCols = minNbCols
+        self.maxNbCols = maxNbCols
+        self.nbChipsToAlign = nbChipsToAlign
+    }
     
     func isGameOver(byPlayer playerId: Int, onGrid grid: [[Int?]]) -> (isOver: Bool, hasWinner: Bool, victoryTiles: [(Int, Int)]?) {
         
@@ -85,24 +108,4 @@ public struct BasicDefaultsNoDiag : IRules {
         case right
         case down
     }
-    
-    init?(withMinNbRows minNbRows: Int = 0,
-          withMaxNbRows maxNbRows: Int = 15,
-          withMaxNbCols minNbCols: Int = 0,
-          withMaxNbCols maxNbCols: Int = 15,
-          withNbChipsToAlign nbChipsToAlign: Int = 4) {
-        
-        guard (nbChipsToAlign >= 2
-               && (
-                nbChipsToAlign < maxNbCols || nbChipsToAlign < maxNbRows
-               )) else { return nil }
-        
-        self.minNbRows = minNbRows
-        self.maxNbRows = maxNbRows
-        self.minNbCols = minNbCols
-        self.maxNbCols = maxNbCols
-        self.nbChipsToAlign = nbChipsToAlign
-    }
-    
-    
 }
