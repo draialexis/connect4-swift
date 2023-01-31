@@ -84,17 +84,29 @@ final class BoardTest: XCTestCase {
         }
         
         // p1, ok
-        expect(withGrid: [[nil, nil, nil], [nil, nil, nil], [nil, nil, nil]], playerId: 1, secretTargetRow: 2, targetCol: 0, shouldWork: true)
+        expect(withGrid: [[nil, nil, nil],
+                          [nil, nil, nil],
+                          [nil, nil, nil]], playerId: 1, secretTargetRow: 2, targetCol: 0, shouldWork: true)
         // p2, ok
-        expect(withGrid: [[nil, nil, nil], [nil, nil, nil], [nil, nil, nil]], playerId: 2, secretTargetRow: 2, targetCol: 0, shouldWork: true)
+        expect(withGrid: [[nil, nil, nil],
+                          [nil, nil, nil],
+                          [nil, nil, nil]], playerId: 2, secretTargetRow: 2, targetCol: 0, shouldWork: true)
         // out of bounds left, nok
-        expect(withGrid: [[nil, nil, nil], [nil, nil, nil], [nil, nil, nil]], playerId: 1, secretTargetRow: 2, targetCol: -1, shouldWork: false)
+        expect(withGrid: [[nil, nil, nil],
+                          [nil, nil, nil],
+                          [nil, nil, nil]], playerId: 1, secretTargetRow: 2, targetCol: -1, shouldWork: false)
         // out of bounds right, nok
-        expect(withGrid: [[nil, nil, nil], [nil, nil, nil], [nil, nil, nil]], playerId: 1, secretTargetRow: 2, targetCol: 3, shouldWork: false)
+        expect(withGrid: [[nil, nil, nil],
+                          [nil, nil, nil],
+                          [nil, nil, nil]], playerId: 1, secretTargetRow: 2, targetCol: 3, shouldWork: false)
         // grid full, nok
-        expect(withGrid: [[1, 2, 1], [1, 2, 1], [2, 1, 2]], playerId: 1, secretTargetRow: 0, targetCol: 1, shouldWork: false)
+        expect(withGrid: [[1, 2, 1],
+                          [1, 2, 1],
+                          [2, 1, 2]], playerId: 1, secretTargetRow: 0, targetCol: 1, shouldWork: false)
         // column full, nok
-        expect(withGrid: [[nil, nil, 2], [nil, nil, 1], [nil, nil, 2]], playerId: 1, secretTargetRow: 0, targetCol: 2, shouldWork: false)
+        expect(withGrid: [[nil, nil, 2],
+                          [nil, nil, 1],
+                          [nil, nil, 2]], playerId: 1, secretTargetRow: 0, targetCol: 2, shouldWork: false)
 
     }
 }
