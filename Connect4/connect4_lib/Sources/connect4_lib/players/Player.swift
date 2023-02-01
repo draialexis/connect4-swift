@@ -2,17 +2,17 @@ import Foundation
 
 class Player {
     
-    let id: Int
+    private let id: Int
+    private let name: String
     
-    init(withId id: Int){
+    init(withId id: Int, withName name: String){
         self.id = id
+        self.name = name
     }
-
-    ///
+    
     /// should be considered abstract and overridden by descendants
-    internal func playBetween(min: Int, andMaxIncl maxIncl: Int) -> Int {
-        return -1
+    func chooseColumn(inBoard board: Board, withRules rules: IRules) -> Int? {
+        return nil
     }
     
 }
-

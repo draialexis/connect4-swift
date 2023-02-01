@@ -31,7 +31,7 @@ public struct BasicDefaultsNoDiag : IRules {
     }
     
     public func isGameOver(byPlayer playerId: Int, onGrid grid: [[Int?]])
-    -> (isOver: Bool, hasWinner: Bool, victoryTiles: [(Int, Int)]?) {
+    -> (isOver: Bool, result: Result) {
         
         // first check if board is full
         var isFull = true
@@ -72,7 +72,7 @@ public struct BasicDefaultsNoDiag : IRules {
                             // row i, origin is (i, j), goes to the right
                             victoryTiles[x] = (i, j + x)
                         }
-                        return (isOver: true, hasWinner: true, victoryTiles)
+                        return (isOver: true, Result.won(playerId, victoryTiles))
                     }
                 }
                 
@@ -96,13 +96,16 @@ public struct BasicDefaultsNoDiag : IRules {
                             // column j, origin is (i, j), goes down
                             victoryTiles[x] = (i + x, j)
                         }
-                        return (isOver: true, hasWinner: true, victoryTiles)
+                        return (isOver: true, Result.won(playerId, victoryTiles))
                     }
                 }
             }
         }
-
-        return (isFull, hasWinner: false, nil);
+        if(isFull) {
+            return (isOver: true, Result.deadlocked);
+        } else {
+            return (isOver: false, Result.notOver)
+        }
     }
         
     private func checkAligned(byPlayer playerId: Int,

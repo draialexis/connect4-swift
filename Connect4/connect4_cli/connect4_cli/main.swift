@@ -16,3 +16,14 @@ if var b = Board(withRows: 3, andWithCols: 3) {
     status = b.insertChip(from: 1, atCol: 1)
     print(b)
 }
+
+public func scan() -> Int {
+    // board.dispokayBoard()
+    // print("player \(rules.getNextPlayer()), choose a column between ")
+    var res: Int? = nil
+    while(res == nil) {
+        let str = readLine()
+        res = Int(str ?? "")
+    }
+    return res!
+}
