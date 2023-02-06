@@ -1,0 +1,21 @@
+kind: pipeline
+type: docker
+name: default
+
+trigger:
+  event:
+    - push
+
+steps:
+  - name: build
+    image: swift:latest
+    commands:
+      - cd Connect4/connect4_lib/Sources/connect4_lib
+      - swift build
+
+  - name: tests_Model
+    image: swift:latest
+    commands:
+      - cd Connect4/connect4_lib/Sources/connect4_lib
+      - swift test
+    depends_on: [build]
