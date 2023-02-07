@@ -1,11 +1,13 @@
 import Foundation
 
-class Player {
+public class Player {
     
-    private let id: Int
-    private let name: String
+    public private(set) var id: Int
+    public private(set) var name: String
     
-    init(withId id: Int, withName name: String){
+    
+    
+    init?(withId id: Int, withName name: String){
         self.id = id
         self.name = name
     }

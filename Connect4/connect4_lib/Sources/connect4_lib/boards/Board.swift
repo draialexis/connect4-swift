@@ -65,7 +65,7 @@ public struct Board : CustomStringConvertible {
         return string
     }
 
-    mutating func insertChip(from playerId: Int, atRow row: Int, atCol col: Int) -> Bool {
+    private mutating func insertChip(from playerId: Int, atRow row: Int, atCol col: Int) -> Bool {
         guard(isWithinBounds(row, and: col)) else { return false }
         guard((_grid[row][col] == nil)) else { return false }
         

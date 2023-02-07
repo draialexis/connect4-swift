@@ -1,5 +1,5 @@
 import Foundation
-class Game {
+public class Game {
     private let scanner: () -> Int
     private let displayBoard: () -> String
     private let board: Board

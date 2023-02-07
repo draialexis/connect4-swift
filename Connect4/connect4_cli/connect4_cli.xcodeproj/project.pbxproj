@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EC09DD712992908700D485C7 /* connect4_lib in Frameworks */ = {isa = PBXBuildFile; productRef = EC09DD702992908700D485C7 /* connect4_lib */; };
 		EC7D164D297F0ECA001832F1 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC7D164C297F0ECA001832F1 /* main.swift */; };
-		EC7D165B297F0F37001832F1 /* connect4_lib in Frameworks */ = {isa = PBXBuildFile; productRef = EC7D165A297F0F37001832F1 /* connect4_lib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -33,7 +33,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EC7D165B297F0F37001832F1 /* connect4_lib in Frameworks */,
+				EC09DD712992908700D485C7 /* connect4_lib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -89,7 +89,7 @@
 			);
 			name = connect4_cli;
 			packageProductDependencies = (
-				EC7D165A297F0F37001832F1 /* connect4_lib */,
+				EC09DD702992908700D485C7 /* connect4_lib */,
 			);
 			productName = connect4_cli;
 			productReference = EC7D1649297F0ECA001832F1 /* connect4_cli */;
@@ -295,7 +295,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		EC7D165A297F0F37001832F1 /* connect4_lib */ = {
+		EC09DD702992908700D485C7 /* connect4_lib */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = connect4_lib;
 		};
