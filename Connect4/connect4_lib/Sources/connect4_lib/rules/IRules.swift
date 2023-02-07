@@ -6,12 +6,18 @@ public protocol IRules {
     var minNbCols: Int { get }
     var maxNbCols: Int { get }
     var nbChipsToAlign: Int { get }
-    func isGameOver(byPlayer playerId: Int, onGrid grid: [[Int?]]) -> (isOver: Bool, result: Result)
-    // TODO plug in the EnumResult
-    // and
-    // getNextPlayer(c) -> Int
-    // isValid(c) -> Bool
     
+    func isGameOver(byPlayer playerId: Int,
+                    onGrid grid: [[Int?]])
+    -> (isOver: Bool, result: Result)
+    
+    func isValid(withMinNbRows: Int,
+                 withMaxNbRows: Int,
+                 withMinNbCols: Int,
+                 withMaxNbCols: Int,
+                 withNbChipsToAlign: Int)
+    -> Bool
+    // TODO : getNextPlayer(c) -> Int (or code this in Game instead? what is c anyway? Board doesn't know the players...)
 }
 
 public enum Result : Equatable {

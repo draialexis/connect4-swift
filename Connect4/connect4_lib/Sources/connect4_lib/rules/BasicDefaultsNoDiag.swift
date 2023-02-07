@@ -12,22 +12,35 @@ public struct BasicDefaultsNoDiag : IRules {
           withMinNbCols minNbCols: Int = 5,
           withMaxNbCols maxNbCols: Int = 15,
           withNbChipsToAlign nbChipsToAlign: Int = 4) {
-        
-        guard (
-            minNbRows >= 3
-            && minNbCols >= 3
-            && maxNbRows >= minNbRows
-            && maxNbCols >= minNbCols
-            && nbChipsToAlign >= 2
-            && nbChipsToAlign <= minNbCols
-            && nbChipsToAlign <= minNbRows
-        ) else { return nil }
-        
+
         self.minNbRows = minNbRows
         self.maxNbRows = maxNbRows
         self.minNbCols = minNbCols
         self.maxNbCols = maxNbCols
         self.nbChipsToAlign = nbChipsToAlign
+        
+        guard (isValid(
+            withMinNbRows: minNbRows,
+            withMaxNbRows: maxNbRows,
+            withMinNbCols: minNbCols,
+            withMaxNbCols: maxNbCols,
+            withNbChipsToAlign: nbChipsToAlign
+        )) else { return nil }
+        }
+    
+    public func isValid(withMinNbRows minNbRows: Int = 5,
+                               withMaxNbRows maxNbRows: Int = 15,
+                               withMinNbCols minNbCols: Int = 5,
+                               withMaxNbCols maxNbCols: Int = 15,
+                               withNbChipsToAlign nbChipsToAlign: Int = 4)
+    -> Bool {
+        return minNbRows >= 3
+        && minNbCols >= 3
+        && maxNbRows >= minNbRows
+        && maxNbCols >= minNbCols
+        && nbChipsToAlign >= 2
+        && nbChipsToAlign <= minNbCols
+        && nbChipsToAlign <= minNbRows
     }
     
     public func isGameOver(byPlayer playerId: Int, onGrid grid: [[Int?]])
