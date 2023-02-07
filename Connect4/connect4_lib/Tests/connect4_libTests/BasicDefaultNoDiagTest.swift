@@ -41,32 +41,13 @@ final class BasicDefaultNoDiagTest: XCTestCase {
     func testIsGameOver() throws {
         func expect(byPlayer playerId: Int,
                     withGrid grid: [[Int?]],
-                    shouldBeOver: Bool,
-                    shouldHaveWinner: Bool,
-                    victoryTilesShouldBe: [(Int, Int)]?) {
+                    resultShouldBe: Result) {
              
             if let rules = BasicDefaultsNoDiag(withMinNbRows: 3, withMaxNbRows: 5, withMinNbCols: 3, withMaxNbCols: 5, withNbChipsToAlign: 3) {
                 
-                let result = rules.isGameOver(byPlayer: playerId, onGrid: grid)
+                let gameStatus = rules.isGameOver(byPlayer: playerId, onGrid: grid)
                 
-                XCTAssertEqual(shouldBeOver, result.isOver)
-                XCTAssertEqual(shouldHaveWinner, result.hasWinner)
-                XCTAssertFalse(result.hasWinner && !(result.isOver))
-                
-                if shouldHaveWinner {
-                    XCTAssertTrue(result.isOver)
-
-                    let actualVictoryTiles = result.victoryTiles
-                    
-                    XCTAssertNotNil(actualVictoryTiles)
-    
-                    if let actualVictoryTiles {
-                        for n in 0..<victoryTilesShouldBe!.count {
-                            XCTAssertEqual(victoryTilesShouldBe![n].0, actualVictoryTiles[n].0)
-                            XCTAssertEqual(victoryTilesShouldBe![n].1, actualVictoryTiles[n].1)
-                        }
-                    }
-                }
+                XCTAssertEqual(resultShouldBe, gameStatus.result)
             }
         }
         
@@ -74,25 +55,19 @@ final class BasicDefaultNoDiagTest: XCTestCase {
                withGrid: [[nil, nil, nil],
                           [nil, nil, nil],
                           [nil, nil, nil]],
-               shouldBeOver: false,
-               shouldHaveWinner: false,
-               victoryTilesShouldBe: nil)
+               resultShouldBe: .notOver)
         
         expect(byPlayer: 2,
                withGrid: [[nil, nil, nil],
                           [nil, nil, nil],
                           [2, nil, nil]],
-               shouldBeOver: false,
-               shouldHaveWinner: false,
-               victoryTilesShouldBe: nil)
+               resultShouldBe: .notOver)
         
         expect(byPlayer: 1,
                withGrid: [[2, nil, nil],
                           [1, 1, 1],
                           [2, 2, 1]],
-               shouldBeOver: true,
-               shouldHaveWinner: true,
-               victoryTilesShouldBe: [(1, 0), (1, 1), (1, 2)])
+               resultShouldBe: .won(1, [(1, 0), (1, 1), (1, 2)]))
         
         expect(byPlayer: 2,
                withGrid: [[nil, nil, nil, nil, nil],
@@ -100,24 +75,18 @@ final class BasicDefaultNoDiagTest: XCTestCase {
                           [nil, nil, nil, nil, nil],
                           [nil, nil, nil, 1, nil],
                           [1, 1, 2, 2, 2]],
-               shouldBeOver: true,
-               shouldHaveWinner: true,
-               victoryTilesShouldBe: [(4, 2), (4, 3), (4, 4)])
+               resultShouldBe: .won(2, [(4, 2), (4, 3), (4, 4)]))
         
         expect(byPlayer: 1,
                withGrid: [[nil, nil, 1],
                           [nil, 2, 1],
                           [nil, 2, 1]],
-               shouldBeOver: true,
-               shouldHaveWinner: true,
-               victoryTilesShouldBe: [(0, 2), (1, 2), (2, 2)])
+               resultShouldBe: .won(1, [(0, 2), (1, 2), (2, 2)]))
         
         expect(byPlayer: 1,
                withGrid: [[1, 2, 1],
                           [1, 2, 1],
                           [2, 1, 2]],
-               shouldBeOver: true,
-               shouldHaveWinner: false,
-               victoryTilesShouldBe: nil)
+               resultShouldBe: .deadlocked)
     }
 }
