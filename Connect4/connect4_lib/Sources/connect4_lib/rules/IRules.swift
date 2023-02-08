@@ -17,7 +17,9 @@ public protocol IRules {
                  withMaxNbCols: Int,
                  withNbChipsToAlign: Int)
     -> Bool
-    // TODO : getNextPlayer(c) -> Int (or code this in Game instead? what is c anyway? Board doesn't know the players...)
+    
+    func getNextPlayer(fromGrid grid: [[Int?]], withPlayer1Id p1id: Int, withPlayer2Id p2id: Int)
+    -> Int
 }
 
 public enum Result : Equatable {

@@ -65,6 +65,18 @@ public struct Board : CustomStringConvertible {
         return string
     }
 
+    public func displayVictory(fromTiles tiles: [(Int, Int)]) -> String {
+        var tmpGrid: [[Int?]] = Array(repeating: Array(repeating: nil, count: nbCols), count: nbRows)
+        for pair in tiles { tmpGrid[pair.0][pair.1] = 42 }
+        
+        var string = String()
+        for row in tmpGrid {
+            for tile in row { string.append(tile == nil ? "@" : "$") }
+            string.append("\n")
+        }
+        return string
+    }
+    
     private mutating func insertChip(from playerId: Int, atRow row: Int, atCol col: Int) -> Bool {
         guard(isWithinBounds(row, and: col)) else { return false }
         guard((_grid[row][col] == nil)) else { return false }

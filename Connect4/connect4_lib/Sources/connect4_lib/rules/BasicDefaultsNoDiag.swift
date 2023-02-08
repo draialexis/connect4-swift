@@ -43,6 +43,25 @@ public struct BasicDefaultsNoDiag : IRules {
         && nbChipsToAlign <= minNbRows
     }
     
+    public func getNextPlayer(fromGrid grid: [[Int?]], withPlayer1Id p1id: Int, withPlayer2Id p2id: Int)
+    -> Int {
+        var p1ctr = 0, p2ctr = 0
+        
+        for row in grid {
+            for tile in row {
+                if let tile { // not nil
+                    if tile == p1id { p1ctr += 1 }
+                    if tile == p2id { p2ctr += 1 }
+                }
+            }
+        }
+        
+        // player 1 will always start
+        
+        if p1ctr <= p2ctr { return p1id } // but it should only ever be == or > ...
+        else { return p2id }
+    }
+    
     public func isGameOver(byPlayer playerId: Int, onGrid grid: [[Int?]])
     -> (isOver: Bool, result: Result) {
         
