@@ -1,7 +1,7 @@
 import Foundation
 public class Game {
     private let scanner: () -> Int
-    private let displayBoard: () -> String
+    public let displayBoard: () -> String
     private var board: Board
     private let rules: IRules
     private let player1: Player
@@ -26,10 +26,6 @@ public class Game {
     public var isOver: (isOver: Bool, result: Result) {
         return rules.isGameOver(byPlayer: getCurrentPlayerId(),
                                 onGrid: board.grid)
-    }
-    
-    public var boardString: String {
-        return board.description
     }
     
     public var gameOverString: String {

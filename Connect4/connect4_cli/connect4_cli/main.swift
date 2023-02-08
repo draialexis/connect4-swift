@@ -36,10 +36,10 @@ if let rules = BasicDefaultsNoDiag() {
                     print("game")
 
                     status = game.isOver
-                    print(game.boardString) // 1st turn
+                    print(game.displayBoard()) // 1st turn
                     while(!(status.isOver)) {
                         if game.play() {
-                            print(game.boardString)
+                            print(game.displayBoard())
                             status = game.isOver
                         }
                     }
