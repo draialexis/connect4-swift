@@ -10,9 +10,5 @@ public class Human: Player {
         super.init(withId: id, withName: name)
     }
 
-    public override func chooseColumn(inBoard board: Board,
-                               withRules rules: IRules)
-    -> Int? {
-        return scanner()
-    }
+    public override func chooseColumn(inBoard board: Board, withRules rules: IRules) -> Int? { return scanner() }
 }
