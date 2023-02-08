@@ -7,6 +7,10 @@ public class Player {
     
     init?(withId id: Int,
           withName name: String){
+        guard(id >= 0
+              && !(name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty))
+        else { return nil }
+        
         self.id = id
         self.name = name
     }
