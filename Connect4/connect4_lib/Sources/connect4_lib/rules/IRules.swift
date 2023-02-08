@@ -41,13 +41,13 @@ public enum Result : Equatable {
             
             switch rhs {
             case .won(let rPlayerId, let rVictoryTiles) :
-                if (lPlayerId != rPlayerId || lVictoryTiles == nil || rVictoryTiles == nil) {
+                if (lPlayerId != rPlayerId) {
                     return false
                 }
                 
-                for n in 0..<lVictoryTiles!.count {
-                    if (lVictoryTiles![n].0 != rVictoryTiles![n].0
-                        || lVictoryTiles![n].1 != rVictoryTiles![n].1) {
+                for n in 0..<lVictoryTiles.count {
+                    if (lVictoryTiles[n].0 != rVictoryTiles[n].0
+                        || lVictoryTiles[n].1 != rVictoryTiles[n].1) {
                         return false
                     }
                 }
@@ -64,6 +64,6 @@ public enum Result : Equatable {
     case deadlocked
     
     // playerId, victoryTiles
-    case won(Int, [(Int, Int)]?)
+    case won(Int, [(Int, Int)])
     
 }
