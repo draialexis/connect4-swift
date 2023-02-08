@@ -51,13 +51,14 @@ public struct Board : CustomStringConvertible {
             && 0 <= col && col < nbCols
     }
     
-    static let descriptionMapper : [Int? : String] = [nil : "-", 1 : "X", 2: "O"]
+    static let descriptionMapper : [Int? : String] = [nil : "□", 1 : "X", 2: "O"]
     
     public var description: String {
         var string = String()
         for row in _grid {
             for tile in row {
                 string.append("\(String(describing: Board.descriptionMapper[tile] ?? "@"))")
+                string.append(" ")
             }
             string.append("\n")
         }
@@ -71,7 +72,7 @@ public struct Board : CustomStringConvertible {
         
         var string = String()
         for row in tmpGrid {
-            for tile in row { string.append(tile == nil ? "@" : "$") }
+            for tile in row { string.append(tile == nil ? "□ " : "$ ") }
             string.append("\n")
         }
         return string
