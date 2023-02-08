@@ -1,7 +1,6 @@
 import Foundation
 public class Game {
     private let scanner: () -> Int
-    public let displayBoard: () -> String
     private var board: Board
     private let rules: IRules
     private let player1: Player
@@ -13,9 +12,6 @@ public class Game {
          withPlayer1 player1: Player,
          withPlayer2 player2: Player) {
         self.scanner = scanner
-        self.displayBoard = { () -> String in
-            return board.description
-        }
         guard(rules.isValid(board)) else { return nil }
         self.board = board
         self.rules = rules
@@ -23,15 +19,20 @@ public class Game {
         self.player2 = player2
     }
     
-    public var isOver: (isOver: Bool, result: Result) {
+    public var isOver: Bool {
         return rules.isGameOver(byPlayer: getCurrentPlayerId(),
-                                onGrid: board.grid)
+                                onGrid: board.grid).isOver
+    }
+    
+    public var boardString: String {
+        return board.description
     }
     
     public var gameOverString: String {
         var string = "Game over"
         
-        switch(isOver.result) {
+        switch(rules.isGameOver(byPlayer: getCurrentPlayerId(),
+                                onGrid: board.grid).result) {
         case .won(let playerId, let victoryTiles):
             string.append("\nPlayer \(playerId) won!\n")
             string.append(board.displayVictory(fromTiles: victoryTiles))

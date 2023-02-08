@@ -12,40 +12,30 @@ public func scan() -> Int {
 }
 
 var status: (isOver: Bool, result: Result)
-print("nothing yet")
 if let rules = BasicDefaultsNoDiag() {
-    print("rules")
 
     if let board = Board() {
-        print("board")
 
-        if let human = Human(withId: 1,
+        if let p1 = Human(withId: 1,
                           withName: "Geraldine Humanman",
                           usingScanner: scan) {
-            print("human")
 
-            if let bot = Bot(withId: 2,
+            if let p2 = Bot(withId: 2,
                               withName: "Botty McBotFace") {
-                print("bot")
 
                 if let game = Game(withScanner : scan,
                                    withBoard: board,
                                    withRules: rules,
-                                   withPlayer1: human,
-                                   withPlayer2: bot) {
-                    print("game")
+                                   withPlayer1: p1,
+                                   withPlayer2: p2) {
 
-                    status = game.isOver
-                    print(game.displayBoard()) // 1st turn
-                    while(!(status.isOver)) {
+                    print(game.boardString) // 1st turn
+                    while(!(game.isOver)) {
                         if game.play() {
-                            print(game.displayBoard())
-                            status = game.isOver
+                            print(game.boardString)
                         }
                     }
-                    
                     print(game.gameOverString)
-                    
                 }
             }
         }

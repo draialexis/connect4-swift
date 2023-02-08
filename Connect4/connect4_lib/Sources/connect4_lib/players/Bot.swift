@@ -14,7 +14,7 @@ public class Bot: Player {
     public override func chooseColumn(inBoard board: Board,
                                       withRules rules: IRules)
     -> Int? {
-        print("(^°w°)")
+        print("(\(id)°w°)")
         return Int.random(in: 0..<board.nbCols)
     }
 }
