@@ -2,3 +2,12 @@
 
 # Connect 4
 
+## Coverage
+
+![Coverage](img/coverage.png)
+
+
+## Bot vs bot
+
+![Bot vs bot](img/bot_v_bot.png)
+
