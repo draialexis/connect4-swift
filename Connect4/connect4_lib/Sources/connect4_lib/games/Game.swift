@@ -16,12 +16,9 @@ public class Game {
         self.displayBoard = { () -> String in
             return board.description
         }
-        // TODO check that board is valid using the rules
         self.board = board
         self.rules = rules
         self.player1 = player1
         self.player2 = player2
     }
-    
-    
 }

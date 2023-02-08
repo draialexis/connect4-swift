@@ -11,11 +11,7 @@ public protocol IRules {
                     onGrid grid: [[Int?]])
     -> (isOver: Bool, result: Result)
     
-    func isValid(withMinNbRows: Int,
-                 withMaxNbRows: Int,
-                 withMinNbCols: Int,
-                 withMaxNbCols: Int,
-                 withNbChipsToAlign: Int)
+    func isValid(_ board: Board)
     -> Bool
     
     func getNextPlayer(fromGrid grid: [[Int?]], withPlayer1Id p1id: Int, withPlayer2Id p2id: Int)

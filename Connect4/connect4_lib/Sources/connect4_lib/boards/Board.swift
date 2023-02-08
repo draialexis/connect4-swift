@@ -101,11 +101,11 @@ public struct Board : CustomStringConvertible {
         return false
     }
 
-    mutating func removeChip(fromRow row: Int, fromCol col: Int) {
-        assert(isWithinBounds(row, and: col))
-        _grid[row][col] = nil
-        _nbFree += 1
-    }
+//    mutating func removeChip(fromRow row: Int, fromCol col: Int) {
+//        assert(isWithinBounds(row, and: col))
+//        _grid[row][col] = nil
+//        _nbFree += 1
+//    }
 
     public func isFull() -> Bool {
         return _nbFree <= 0

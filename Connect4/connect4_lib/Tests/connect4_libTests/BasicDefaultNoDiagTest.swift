@@ -38,6 +38,26 @@ final class BasicDefaultNoDiagTest: XCTestCase {
         expect(withMinNbRows: 5, withMaxNbRows: 12, withMinNbCols: 5, withMaxNbCols: 10, withNbChipsToAlign: 11, shouldNotBeNil: false)
     }
     
+    func testIsValid() throws {
+        func expect(board: Board,
+                    shouldBeValid: Bool) {
+            print(board)
+            guard let rules = BasicDefaultsNoDiag(withMinNbRows: 5,
+                                                  withMaxNbRows: 8,
+                                                  withMinNbCols: 5,
+                                                  withMaxNbCols: 9,
+                                                  withNbChipsToAlign: 4) else { XCTAssertFalse(true); return }
+            
+            XCTAssertEqual(shouldBeValid, rules.isValid(board))
+        }
+        
+        expect(board: Board(withRows: 5, andWithCols: 9)!, shouldBeValid: true)
+        expect(board: Board(withRows: 4, andWithCols: 9)!, shouldBeValid: false)
+        expect(board: Board(withRows: 9, andWithCols: 9)!, shouldBeValid: false)
+        expect(board: Board(withRows: 5, andWithCols: 4)!, shouldBeValid: false)
+        expect(board: Board(withRows: 5, andWithCols: 10)!, shouldBeValid: false)
+    }
+    
     func testIsGameOver() throws {
         func expect(byPlayer playerId: Int,
                     withGrid grid: [[Int?]],

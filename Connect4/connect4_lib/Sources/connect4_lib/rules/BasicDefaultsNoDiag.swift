@@ -19,28 +19,21 @@ public struct BasicDefaultsNoDiag : IRules {
         self.maxNbCols = maxNbCols
         self.nbChipsToAlign = nbChipsToAlign
         
-        guard (isValid(
-            withMinNbRows: minNbRows,
-            withMaxNbRows: maxNbRows,
-            withMinNbCols: minNbCols,
-            withMaxNbCols: maxNbCols,
-            withNbChipsToAlign: nbChipsToAlign
-        )) else { return nil }
+        guard (minNbRows >= 3
+               && minNbCols >= 3
+               && maxNbRows >= minNbRows
+               && maxNbCols >= minNbCols
+               && nbChipsToAlign >= 2
+               && nbChipsToAlign <= minNbCols
+               && nbChipsToAlign <= minNbRows) else { return nil }
         }
     
-    public func isValid(withMinNbRows minNbRows: Int = 5,
-                               withMaxNbRows maxNbRows: Int = 15,
-                               withMinNbCols minNbCols: Int = 5,
-                               withMaxNbCols maxNbCols: Int = 15,
-                               withNbChipsToAlign nbChipsToAlign: Int = 4)
+    public func isValid(_ board: Board)
     -> Bool {
-        return minNbRows >= 3
-        && minNbCols >= 3
-        && maxNbRows >= minNbRows
-        && maxNbCols >= minNbCols
-        && nbChipsToAlign >= 2
-        && nbChipsToAlign <= minNbCols
-        && nbChipsToAlign <= minNbRows
+        return board.nbRows >= minNbRows
+        && board.nbRows <= maxNbRows
+        && board.nbCols >= minNbCols
+        && board.nbCols <= maxNbCols
     }
     
     public func getNextPlayer(fromGrid grid: [[Int?]], withPlayer1Id p1id: Int, withPlayer2Id p2id: Int)
