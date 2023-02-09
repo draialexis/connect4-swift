@@ -31,14 +31,12 @@ public class Game {
     public var gameOverString: String {
         var string = "Game over"
         
-        switch(rules.isGameOver(byPlayer: getCurrentPlayerId(),
-                                onGrid: board.grid).result) {
-        case .won(let playerId, let victoryTiles):
+        let gameOverResult = rules.isGameOver(byPlayer: getCurrentPlayerId(),
+                                              onGrid: board.grid).result
+        if case .won(let playerId, let victoryTiles) = gameOverResult {
             string.append("\nPlayer \(playerId) won!\n")
             string.append(board.displayVictory(fromTiles: victoryTiles))
-        default: break; // nothing
         }
-        
         return string
     }
     
@@ -47,7 +45,11 @@ public class Game {
         let currentPlayer = {
             if(rules.getNextPlayer(fromGrid: board.grid,
                                    withPlayer1Id: player1.id,
-                                   withPlayer2Id: player2.id) == player1.id) { return player1 } else { return player2 }
+                                   withPlayer2Id: player2.id) == player1.id) {
+                return player1
+            } else {
+                return player2
+            }
         }()
         
         if let chosenCol = currentPlayer.chooseColumn(inBoard: board,
@@ -60,7 +62,10 @@ public class Game {
     private func getCurrentPlayerId() -> Int {
         if(rules.getNextPlayer(fromGrid: board.grid,
                                withPlayer1Id: player1.id,
-                               withPlayer2Id: player2.id) == player1.id) { return player2.id } else { return player1.id }
+                               withPlayer2Id: player2.id) == player1.id) {
+            return player2.id
+        } else {
+            return player1.id
+        }
     }
-    
 }
