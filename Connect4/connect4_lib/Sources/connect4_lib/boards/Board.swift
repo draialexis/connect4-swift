@@ -1,6 +1,5 @@
 import Foundation
 
-//TODO implement Equatable?
 public struct Board : CustomStringConvertible {
     
     public let nbRows: Int
@@ -68,11 +67,14 @@ public struct Board : CustomStringConvertible {
 
     public func displayVictory(fromTiles tiles: [(Int, Int)]) -> String {
         var tmpGrid: [[Int?]] = Array(repeating: Array(repeating: nil, count: nbCols), count: nbRows)
-        for pair in tiles { tmpGrid[pair.0][pair.1] = 42 }
-        
+        for pair in tiles {
+            tmpGrid[pair.0][pair.1] = 42
+        }
         var string = String()
         for row in tmpGrid {
-            for tile in row { string.append(tile == nil ? "□ " : "$ ") }
+            for tile in row {
+                string.append(tile == nil ? "□ " : "$ ")
+            }
             string.append("\n")
         }
         return string
@@ -80,7 +82,7 @@ public struct Board : CustomStringConvertible {
     
     private mutating func insertChip(from playerId: Int, atRow row: Int, atCol col: Int) -> Bool {
         guard(isWithinBounds(row, and: col)) else { return false }
-        guard((_grid[row][col] == nil)) else { return false }
+        guard(_grid[row][col] == nil) else { return false }
         
         _grid[row][col] = playerId
         _nbFree -= 1
@@ -90,23 +92,24 @@ public struct Board : CustomStringConvertible {
     public mutating func insertChip(from playerId: Int, atCol col: Int) -> Bool {
         guard(0 <= col && col < nbCols) else { return false }
         guard(!isFull()) else { return false }
-
-        if _grid[0][col] != nil { return false }
-                
+        
+        if _grid[0][col] != nil {
+            return false
+        }
         for i in stride(from: nbRows - 1, through: 0, by: -1) {
             if _grid[i][col] == nil {
                 return insertChip(from: playerId, atRow: i, atCol: col)
             }
         }
-
         return false
     }
 
-//    mutating func removeChip(fromRow row: Int, fromCol col: Int) {
-//        assert(isWithinBounds(row, and: col))
-//        _grid[row][col] = nil
-//        _nbFree += 1
-//    }
+    private mutating func removeChip(fromRow row: Int, fromCol col: Int) -> Bool {
+        guard(isWithinBounds(row, and: col)) else { return false }
+        _grid[row][col] = nil
+        _nbFree += 1
+        return true
+    }
 
     public func isFull() -> Bool {
         return _nbFree <= 0
