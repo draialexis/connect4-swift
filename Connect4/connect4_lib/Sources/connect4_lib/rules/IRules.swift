@@ -18,43 +18,32 @@ public protocol IRules {
     -> Int
 }
 
+private func == (lhs:(Int, Int), rhs:(Int, Int)) -> Bool
+{
+   return (lhs.0 == rhs.0) && (lhs.1 == rhs.1)
+}
+
+
 public enum Result : Equatable {
     public static func == (lhs: Result, rhs: Result) -> Bool {
-        switch lhs {
-        case .notOver :
-            
-            switch rhs {
-            case .notOver : return true
-            default : return false
+        switch (lhs, rhs) {
+        case (.notOver, .notOver):
+            return true
+        case (.deadlocked, .deadlocked) :
+            return true
+        case let (.won(lPlayerId, lVictoryTiles), .won(rPlayerId, rVictoryTiles)) :
+            if lPlayerId != rPlayerId {
+                return false
             }
-            
-        case .deadlocked :
-            
-            switch rhs {
-            case .deadlocked : return true
-            default : return false
-            }
-            
-        case .won(let lPlayerId, let lVictoryTiles) :
-            
-            switch rhs {
-            case .won(let rPlayerId, let rVictoryTiles) :
-                if (lPlayerId != rPlayerId) {
+            for n in 0..<lVictoryTiles.count{
+                if(lVictoryTiles[n].0 != rVictoryTiles[n].0
+                   || lVictoryTiles[n].1 != rVictoryTiles[n].1) {
                     return false
                 }
-                
-                for n in 0..<lVictoryTiles.count {
-                    if (lVictoryTiles[n].0 != rVictoryTiles[n].0
-                        || lVictoryTiles[n].1 != rVictoryTiles[n].1) {
-                        return false
-                    }
-                }
-                
-                return true
-                
-            default : return false
-                
             }
+            return true
+        default:
+            return false
         }
     }
     
@@ -65,3 +54,5 @@ public enum Result : Equatable {
     case won(Int, [(Int, Int)])
     
 }
+
+
