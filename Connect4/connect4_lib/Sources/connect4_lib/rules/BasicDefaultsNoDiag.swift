@@ -38,36 +38,62 @@ public struct BasicDefaultsNoDiag : IRules {
     
     public func getNextPlayer(fromGrid grid: [[Int?]], withPlayer1Id p1id: Int, withPlayer2Id p2id: Int)
     -> Int {
-        var p1ctr = 0, p2ctr = 0
+        // player 1 will always start
+        let playerCounters = grid
+            .flatMap { $0 }
+            .compactMap { $0 }
+            .reduce([p1id: 0, p2id: 0]) { (inCounters, tile) in
+                var counters = inCounters
+                counters[tile, default: 0] += 1
+                return counters
+            }
         
+        
+        return playerCounters[p1id] ?? 0 <= playerCounters[p2id] ?? 0
+                ? p1id
+                : p2id
+    }
+    
+    private func isFull(_ grid: [[Int?]]) -> Bool {
         for row in grid {
             for tile in row {
-                if let tile { // not nil
-                    if tile == p1id { p1ctr += 1 }
-                    if tile == p2id { p2ctr += 1 }
+                if tile == nil {
+                    return false
                 }
             }
         }
-        
-        // player 1 will always start
-        
-        if p1ctr <= p2ctr { return p1id } // but it should only ever be == or > ...
-        else { return p2id }
+        return true
     }
     
+    private func checkVictory(byPlayer playerId: Int,
+                              onGrid grid: [[Int?]],
+                              fromRow: Int,
+                              fromCol: Int,
+                              going direction: Direction,
+                              victoryTiles: inout [(Int, Int)]) -> Bool {
+        let amountAligned = checkAligned(byPlayer: playerId,
+                                         onGrid: grid,
+                                         fromRow: fromRow,
+                                         fromCol: fromCol,
+                                         going: direction)
+        if amountAligned >= nbChipsToAlign {
+            for x in 0..<nbChipsToAlign {
+                if direction == .right {
+                    victoryTiles[x] = (fromRow, fromCol + x)
+                } else if direction == .down {
+                    victoryTiles[x] = (fromRow + x, fromCol)
+                }
+            }
+            return true
+        }
+        return false
+    }
+                              
     public func isGameOver(byPlayer playerId: Int, onGrid grid: [[Int?]])
     -> (isOver: Bool, result: Result) {
         
         // first check if board is full
-        var isFull = true
-        for row in grid {
-            for tile in row {
-                if tile == nil {
-                    isFull = false
-                    break
-                }
-            }
-        }
+        let isFull = isFull(grid)
         
         var victoryTiles : [(Int, Int)] = Array(repeating: (0, 0), count: nbChipsToAlign)
         
@@ -77,97 +103,62 @@ public struct BasicDefaultsNoDiag : IRules {
         
         for i in 0..<nbRows {
             for j in 0..<nbCols {
-                // check if there is room to the right
-                if (nbCols - j) >= nbChipsToAlign && grid[i][j] != nil && grid[i][j] == playerId {
-                    
-                    // check for victory
-                    let amountAligned = checkAligned(byPlayer: playerId,
-                                                     onGrid: grid,
-                                                     fromRow: i,
-                                                     upToRow: (nbRows - 1),
-                                                     andCol: j,
-                                                     upToCol: (nbCols - 1),
-                                                     going: directions.right)
-                    
-                    //print("player \(String(describing: Board.descriptionMapper[playerId])) aligned \(amountAligned) horizontally:")
-                    if amountAligned >= nbChipsToAlign {
-                        
-                        for x in 0..<nbChipsToAlign {
-                            
-                            // row i, origin is (i, j), goes to the right
-                            victoryTiles[x] = (i, j + x)
-                        }
-                        return (isOver: true, Result.won(playerId, victoryTiles))
-                    }
+                if let tile = grid[i][j], (nbCols - j) >= nbChipsToAlign && tile == playerId && checkVictory(byPlayer: playerId,
+                                                                                                             onGrid: grid,
+                                                                                                             fromRow: i,
+                                                                                                             fromCol: j,
+                                                                                                             going: .right,
+                                                                                                             victoryTiles: &victoryTiles) {
+                    return (isOver: true, Result.won(playerId, victoryTiles))
                 }
-                
-                // check if there is room lower down
-                if (nbRows - i) >= nbChipsToAlign && grid[i][j] != nil && grid[i][j] == playerId {
-                    
-                    // check for victory
-                    let amountAligned = checkAligned(byPlayer: playerId,
-                                                     onGrid: grid,
-                                                     fromRow: i,
-                                                     upToRow: (nbRows - 1),
-                                                     andCol: j,
-                                                     upToCol: (nbCols - 1),
-                                                     going: directions.down)
-                    
-                    //print("player \(String(describing: Board.descriptionMapper[playerId])) aligned \(amountAligned) vertically:")
-                    if amountAligned >= nbChipsToAlign {
-                        
-                        for x in 0..<nbChipsToAlign {
-                            
-                            // column j, origin is (i, j), goes down
-                            victoryTiles[x] = (i + x, j)
-                        }
-                        return (isOver: true, Result.won(playerId, victoryTiles))
-                    }
+                if let tile = grid[i][j], (nbRows - i) >= nbChipsToAlign && tile == playerId && checkVictory(byPlayer: playerId,
+                                                                                                             onGrid: grid,
+                                                                                                             fromRow: i,
+                                                                                                             fromCol: j,
+                                                                                                             going: .down,
+                                                                                                             victoryTiles: &victoryTiles) {
+                    return (isOver: true, Result.won(playerId, victoryTiles))
                 }
             }
         }
-        if(isFull) {
-            return (isOver: true, Result.deadlocked);
-        } else {
-            return (isOver: false, Result.notOver)
-        }
+        return (isOver: isFull,
+                isFull ? Result.deadlocked : Result.notOver);
     }
         
     private func checkAligned(byPlayer playerId: Int,
-                                   onGrid grid: [[Int?]],
-                                   fromRow i: Int,
-                                   upToRow iMax: Int,
-                                   andCol j: Int,
-                                   upToCol jMax: Int,
-                                   going direction: directions) -> Int {
-        if let tile = grid[i][j] {
-            if tile == playerId {
-                if direction == directions.right {
-                    if j == jMax { return 1 }
-                    return 1 + checkAligned(byPlayer: playerId,
-                                            onGrid: grid,
-                                            fromRow: i,
-                                            upToRow: iMax,
-                                            andCol: j + 1,
-                                            upToCol: jMax,
-                                            going: direction)
-                    
-                } else if direction == directions.down {
-                    if i == iMax { return 1 }
-                    return 1 + checkAligned(byPlayer: playerId,
-                                            onGrid: grid,
-                                            fromRow: i + 1,
-                                            upToRow: iMax,
-                                            andCol: j,
-                                            upToCol: jMax,
-                                            going: direction)
+                              onGrid grid: [[Int?]],
+                              fromRow i: Int,
+                              fromCol j: Int,
+                              going direction: Direction) -> Int {
+        let iMax = grid.count - 1
+        let jMax = grid[0].count - 1
+        
+        if let tile = grid[i][j], tile == playerId {
+            if direction == .right {
+                if j == jMax {
+                    return 1
                 }
+                return 1 + checkAligned(byPlayer: playerId,
+                                        onGrid: grid,
+                                        fromRow: i,
+                                        fromCol: j + 1,
+                                        going: direction)
+                    
+            } else if direction == .down {
+                if i == iMax {
+                    return 1
+                }
+                return 1 + checkAligned(byPlayer: playerId,
+                                        onGrid: grid,
+                                        fromRow: i + 1,
+                                        fromCol: j,
+                                        going: direction)
             }
         }
         return 0
     }
     
-    private enum directions {
+    private enum Direction {
         case right
         case down
     }

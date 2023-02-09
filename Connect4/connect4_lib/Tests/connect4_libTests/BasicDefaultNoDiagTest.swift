@@ -102,7 +102,7 @@ final class BasicDefaultNoDiagTest: XCTestCase {
                           [nil, 2, 1],
                           [nil, 2, 1]],
                resultShouldBe: .won(1, [(0, 2), (1, 2), (2, 2)]))
-        
+
         expect(byPlayer: 1,
                withGrid: [[1, 2, 1],
                           [1, 2, 1],
