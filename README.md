@@ -12,7 +12,7 @@ Coverage was maintained above 80%. Some private methods were neglected, but woul
 
 ## Class diagram
 
-![Class diagram](./img/UML.png)
+![Class diagram](./img/UML2.png)
 
 ## Choices
 
